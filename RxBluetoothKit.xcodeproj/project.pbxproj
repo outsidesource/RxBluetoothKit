@@ -334,6 +334,7 @@
 		0A7B28381F9F1C3C003F950E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = SOURCE_ROOT; };
 		0A7B28391F9F1C3C003F950E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
 		1BEDCF5C24AEE69000209706 /* CBCentralManager+OS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBCentralManager+OS.swift"; sourceTree = "<group>"; };
+		1BEDCF5E24AEEB5700209706 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		1D1B99D420AEB25C00464AD6 /* PeripheralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D620AEB27C00464AD6 /* CentralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D820AEBE1800464AD6 /* _CentralManagerRestoredState.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CentralManagerRestoredState.generated.swift; sourceTree = "<group>"; };
@@ -713,6 +714,7 @@
 		2666FCEC1CCE4295005E81CE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1BEDCF5E24AEEB5700209706 /* Podfile */,
 				2666FCED1CCE42A5005E81CE /* Info.plist */,
 				2666FCEE1CCE42A5005E81CE /* RxBluetoothKit.h */,
 			);
