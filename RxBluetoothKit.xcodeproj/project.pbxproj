@@ -50,6 +50,7 @@
 		0A7B28341F9F1B39003F950E /* BluetoothState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EF38C81D86EE1F00F9F468 /* BluetoothState.swift */; };
 		0A7B28351F9F1C08003F950E /* RxBluetoothKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2666FCEE1CCE42A5005E81CE /* RxBluetoothKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A7B283D1F9F1C71003F950E /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7B28171F9F1B05003F950E /* RxSwift.framework */; };
+		1BEDCF5D24AEE69000209706 /* CBCentralManager+OS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEDCF5C24AEE69000209706 /* CBCentralManager+OS.swift */; };
 		1D1B99D520AEB25C00464AD6 /* PeripheralManagerRestoredState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B99D420AEB25C00464AD6 /* PeripheralManagerRestoredState.swift */; };
 		1D1B99D720AEB27C00464AD6 /* CentralManagerRestoredState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B99D620AEB27C00464AD6 /* CentralManagerRestoredState.swift */; };
 		1D1B99DA20AEBE3200464AD6 /* _CentralManagerRestoredState.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B99D820AEBE1800464AD6 /* _CentralManagerRestoredState.generated.swift */; };
@@ -332,6 +333,7 @@
 		0A7B28371F9F1C3C003F950E /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/tvOS/RxTest.framework; sourceTree = SOURCE_ROOT; };
 		0A7B28381F9F1C3C003F950E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = SOURCE_ROOT; };
 		0A7B28391F9F1C3C003F950E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
+		1BEDCF5C24AEE69000209706 /* CBCentralManager+OS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBCentralManager+OS.swift"; sourceTree = "<group>"; };
 		1D1B99D420AEB25C00464AD6 /* PeripheralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D620AEB27C00464AD6 /* CentralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D820AEBE1800464AD6 /* _CentralManagerRestoredState.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CentralManagerRestoredState.generated.swift; sourceTree = "<group>"; };
@@ -514,6 +516,14 @@
 				0A7B28371F9F1C3C003F950E /* RxTest.framework */,
 			);
 			name = tvOS;
+			sourceTree = "<group>";
+		};
+		1BEDCF5B24AEE67F00209706 /* OSKit */ = {
+			isa = PBXGroup;
+			children = (
+				1BEDCF5C24AEE69000209706 /* CBCentralManager+OS.swift */,
+			);
+			name = OSKit;
 			sourceTree = "<group>";
 		};
 		1D1BC8A220064A9E004C5F36 /* CentralManager */ = {
@@ -807,6 +817,7 @@
 		A1299BD71CBE3D61005DEA5B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1BEDCF5B24AEE67F00209706 /* OSKit */,
 				1D73E84D20A42F98009167AA /* Central */,
 				1D6E36D420A07F1F009900A6 /* PeripheralManager */,
 				1DD922CC20A06FFD00EFC35F /* Manager */,
@@ -1344,6 +1355,7 @@
 				2666FE381CCE4732005E81CE /* Peripheral+Convenience.swift in Sources */,
 				2666FE3A1CCE4732005E81CE /* Service.swift in Sources */,
 				2666FE451CCE4732005E81CE /* BluetoothError.swift in Sources */,
+				1BEDCF5D24AEE69000209706 /* CBCentralManager+OS.swift in Sources */,
 				1D1B99D720AEB27C00464AD6 /* CentralManagerRestoredState.swift in Sources */,
 				1DA3453D20A0819400F7D629 /* CBPeripheralManagerDelegateWrapper.swift in Sources */,
 				FA947A3B1EB1C41C000ED0B1 /* UUIDIdentifiable.swift in Sources */,
