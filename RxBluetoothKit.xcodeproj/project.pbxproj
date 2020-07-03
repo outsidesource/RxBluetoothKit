@@ -342,6 +342,7 @@
 		0A7B28391F9F1C3C003F950E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
 		1BEDCF5C24AEE69000209706 /* CBCentralManager+OS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBCentralManager+OS.swift"; sourceTree = "<group>"; };
 		1BEDCF5E24AEEB5700209706 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		1BEDCF6024AEEF1700209706 /* RxBluetoothKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = RxBluetoothKit.podspec; sourceTree = "<group>"; };
 		1D1B99D420AEB25C00464AD6 /* PeripheralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D620AEB27C00464AD6 /* CentralManagerRestoredState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerRestoredState.swift; sourceTree = "<group>"; };
 		1D1B99D820AEBE1800464AD6 /* _CentralManagerRestoredState.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CentralManagerRestoredState.generated.swift; sourceTree = "<group>"; };
@@ -749,6 +750,7 @@
 		2666FCEC1CCE4295005E81CE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1BEDCF6024AEEF1700209706 /* RxBluetoothKit.podspec */,
 				1BEDCF5E24AEEB5700209706 /* Podfile */,
 				2666FCED1CCE42A5005E81CE /* Info.plist */,
 				2666FCEE1CCE42A5005E81CE /* RxBluetoothKit.h */,
@@ -824,7 +826,6 @@
 				52B02BCCE2DB31FCE8BBCF28 /* Pods-RxBluetoothKit watchOS.debug.xcconfig */,
 				7C1BE644A61472013D216E12 /* Pods-RxBluetoothKit watchOS.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
