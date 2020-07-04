@@ -113,7 +113,6 @@ public extension CBCentralManager {
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
         } else {
-            let delgateBoxes = CBCentralManager.delegateBoxes
             let delegateBox = CBCentralManagerDelegateBox()
             delegateBox.addDelegate(delegate)
             self.delegateBox = delegateBox
