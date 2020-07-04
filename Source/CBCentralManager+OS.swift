@@ -75,7 +75,7 @@ public class CBCentralManagerDelegateBox: NSObject, CBCentralManagerDelegate {
     
     public func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
         delegates.forEach {
-            if #available(iOS 13.0, *) {
+            if #available(iOS 13.0, *), #available(tvOS 13.0, *), #available(watchOSApplicationExtension 6.0, *) {
                 $0.centralManager?(central, connectionEventDidOccur: event, for: peripheral)
             }
         }
@@ -83,7 +83,7 @@ public class CBCentralManagerDelegateBox: NSObject, CBCentralManagerDelegate {
     
     public func centralManager(_ central: CBCentralManager, didUpdateANCSAuthorizationFor peripheral: CBPeripheral) {
         delegates.forEach {
-            if #available(iOS 13.0, *) {
+            if #available(iOS 13.0, *), #available(tvOS 13.0, *), #available(watchOSApplicationExtension 6.0, *) {
                 $0.centralManager?(central, didUpdateANCSAuthorizationFor: peripheral)
             }
         }
