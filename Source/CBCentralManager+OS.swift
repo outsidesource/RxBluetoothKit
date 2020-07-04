@@ -93,7 +93,6 @@ public class CBCentralManagerDelegateBox: NSObject, CBCentralManagerDelegate {
 
 public extension CBCentralManager {
     
-    static var testInt = 2
     static var delegateBoxes = [Int:CBCentralManagerDelegateBox]()
     
     /// Returns array of CBCentralManagerDelegate using extension hack
@@ -114,7 +113,6 @@ public extension CBCentralManager {
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
         } else {
-            let myTestInt = CBCentralManager.testInt
             let delgateBoxes = CBCentralManager.delegateBoxes
             let delegateBox = CBCentralManagerDelegateBox()
             delegateBox.addDelegate(delegate)
