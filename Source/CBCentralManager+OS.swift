@@ -73,27 +73,31 @@ public class CBCentralManagerDelegateBox: NSObject, CBCentralManagerDelegate {
         }
     }
     
-    public func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
-        delegates.forEach {
-            if #available(iOS 13.0, *) {
-                $0.centralManager?(central, connectionEventDidOccur: event, for: peripheral)
-            }
-        }
-    }
-    
-    public func centralManager(_ central: CBCentralManager, didUpdateANCSAuthorizationFor peripheral: CBPeripheral) {
-        delegates.forEach {
-            if #available(iOS 13.0, *) {
-                $0.centralManager?(central, didUpdateANCSAuthorizationFor: peripheral)
-            }
-        }
-    }
+    // FIXME: reimplement delegate methods and remove from OSX target
+//    @available(iOS 13.0, *)
+//    @available(watchOSApplicationExtension 6.0, *)
+//    @available(tvOS 13.0, *)
+//    @available(OSX, unavailable)
+//    public func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
+//        delegates.forEach {
+//                $0.centralManager?(central, connectionEventDidOccur: event, for: peripheral)
+//        }
+//    }
+//
+//    @available(iOS 13.0, *)
+//    @available(watchOSApplicationExtension 6.0, *)
+//    @available(tvOS 13.0, *)
+//    @available(OSX, unavailable)
+//    public func centralManager(_ central: CBCentralManager, didUpdateANCSAuthorizationFor peripheral: CBPeripheral) {
+//        delegates.forEach {
+//                $0.centralManager?(central, didUpdateANCSAuthorizationFor: peripheral)
+//        }
+//    }
     
 }
 
 public extension CBCentralManager {
     
-    static var testInt = 2
     static var delegateBoxes = [Int:CBCentralManagerDelegateBox]()
     
     /// Returns array of CBCentralManagerDelegate using extension hack
@@ -114,8 +118,6 @@ public extension CBCentralManager {
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
         } else {
-            let myTestInt = CBCentralManager.testInt
-            let delgateBoxes = CBCentralManager.delegateBoxes
             let delegateBox = CBCentralManagerDelegateBox()
             delegateBox.addDelegate(delegate)
             self.delegateBox = delegateBox
