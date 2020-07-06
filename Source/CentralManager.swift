@@ -62,7 +62,7 @@ public class CentralManager: ManagerType {
         self.delegateWrapper = delegateWrapper
         self.peripheralProvider = peripheralProvider
         self.connector = connector
-        centralManager.delegate = delegateWrapper
+        centralManager.addDelegate(delegateWrapper)
     }
 
     /// Creates new `CentralManager` instance. By default all operations and events are executed and received on main thread.
