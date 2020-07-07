@@ -46,7 +46,7 @@ public class Peripheral {
         self.peripheral = peripheral
         self.delegateWrapper = delegateWrapper
         self.notificationManager = notificationManager
-        peripheral.delegate = self.delegateWrapper
+        peripheral.addDelegate(self.delegateWrapper)
 
         setupSubjects()
     }
@@ -120,7 +120,7 @@ public class Peripheral {
     /// This method is useful in cases when delegate of CBPeripheral was reassigned outside of
     /// RxBluetoothKit library (e.g. CBPeripheral was used in some other library or used in non-reactive way)
     public func attach() {
-        peripheral.delegate = delegateWrapper
+        peripheral.addDelegate(delegateWrapper)
     }
 
     /// Value indicating if peripheral is currently in connected state.
