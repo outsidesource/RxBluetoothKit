@@ -124,6 +124,7 @@ public class CBPeripheralDelegateBox: NSObject, CBPeripheralDelegate {
     }
 
     @available(OSX 10.13, *)
+    @available(iOS 11.0, *)
     public func peripheral(_ peripheral: CBPeripheral, didOpen channel: CBL2CAPChannel?, error: Error?) {
         delegates.forEach {
             $0.peripheral?(peripheral, didOpen: channel, error: error)
