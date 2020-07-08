@@ -150,7 +150,7 @@ public extension CBPeripheral {
         }
     }
 
-    func addDelegate(_ delegate: CBPeripheralDelegate) {
+    @objc func addDelegate(_ delegate: CBPeripheralDelegate) {
 
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
@@ -162,7 +162,7 @@ public extension CBPeripheral {
 
     }
 
-    func removeDelegate(_ delegate: CBPeripheralDelegate) {
+    @objc func removeDelegate(_ delegate: CBPeripheralDelegate) {
 
         guard let delegateBox = self.delegateBox else {
             return
