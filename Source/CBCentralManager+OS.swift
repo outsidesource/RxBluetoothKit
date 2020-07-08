@@ -113,7 +113,7 @@ public extension CBCentralManager {
         }
     }
 
-    func addDelegate(_ delegate: CBCentralManagerDelegate) {
+    @objc func addDelegate(_ delegate: CBCentralManagerDelegate) {
 
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
@@ -125,7 +125,7 @@ public extension CBCentralManager {
 
     }
 
-    func removeDelegate(_ delegate: CBCentralManagerDelegate) {
+    @objc func removeDelegate(_ delegate: CBCentralManagerDelegate) {
 
         guard let delegateBox = self.delegateBox else {
             return
