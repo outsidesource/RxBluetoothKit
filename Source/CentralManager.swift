@@ -86,7 +86,7 @@ public class CentralManager: ManagerType {
     /// This method is useful in cases when delegate of CBCentralManager was reassigned outside of
     /// RxBluetoothKit library (e.g. CBCentralManager was used in some other library or used in non-reactive way)
     public func attach() {
-        manager.delegate = delegateWrapper
+        manager.addDelegate(delegateWrapper)
     }
 
     // MARK: State
