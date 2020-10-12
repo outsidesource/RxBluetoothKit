@@ -7,10 +7,9 @@ import RxSwift
 /// advertise, to publish L2CAP channels and more.
 /// You can start using this class by adding services and starting advertising.
 /// Before calling any public `_PeripheralManager`'s functions you should make sure that Bluetooth is turned on and powered on. It can be done
-/// by `observeState()`, observing it's value and then chaining it with `add(_:)` and `startAdvertising(_:)`:
+/// by `observeStateWithInitialValue()`, observing it's value and then chaining it with `add(_:)` and `startAdvertising(_:)`:
 /// ```
-/// let disposable = centralManager.observeState
-///     .startWith(centralManager.state)
+/// let disposable = centralManager.observeStateWithInitialValue()
 ///     .filter { $0 == .poweredOn }
 ///     .take(1)
 ///     .flatMap { centralManager.add(myService) }
@@ -49,11 +48,15 @@ class _PeripheralManager: _ManagerType {
     /// - parameter queue: Queue on which bluetooth callbacks are received. By default main thread is used.
     /// - parameter options: An optional dictionary containing initialization options for a peripheral manager.
     /// For more info about it please refer to [_Peripheral Manager initialization options](https://developer.apple.com/documentation/corebluetooth/cbperipheralmanager/peripheral_manager_initialization_options)
+    /// - parameter cbPeripheralManager: Optional instance of `CBPeripheralManagerMock` to be used as a `manager`. If you
+    /// skip this parameter, there will be created an instance of `CBPeripheralManagerMock` using given queue and options.
     convenience init(queue: DispatchQueue = .main,
-                            options: [String: AnyObject]? = nil) {
+                            options: [String: AnyObject]? = nil,
+                            cbPeripheralManager: CBPeripheralManagerMock? = nil) {
         let delegateWrapper = CBPeripheralManagerDelegateWrapperMock()
         #if os(iOS) || os(macOS)
-        let peripheralManager = CBPeripheralManagerMock(delegate: delegateWrapper, queue: queue, options: options)
+        let peripheralManager = cbPeripheralManager ??
+            CBPeripheralManagerMock(delegate: delegateWrapper, queue: queue, options: options)
         #else
         let peripheralManager = CBPeripheralManagerMock()
         peripheralManager.delegate = delegateWrapper
@@ -70,11 +73,23 @@ class _PeripheralManager: _ManagerType {
     // MARK: State
 
     var state: BluetoothState {
-        return BluetoothState(rawValue: manager.state.rawValue) ?? .unsupported
+        return BluetoothState(rawValue: manager.state.rawValue) ?? .unknown
     }
 
     func observeState() -> Observable<BluetoothState> {
         return self.delegateWrapper.didUpdateState.asObservable()
+    }
+
+    func observeStateWithInitialValue() -> Observable<BluetoothState> {
+        return Observable.deferred { [weak self] in
+            guard let self = self else {
+                RxBluetoothKitLog.w("observeState - _PeripheralManager deallocated")
+                return .never()
+            }
+
+            return self.delegateWrapper.didUpdateState.asObservable()
+                .startWith(self.state)
+        }
     }
 
     // MARK: Advertising
