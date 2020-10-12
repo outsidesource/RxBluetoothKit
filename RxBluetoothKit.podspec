@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxBluetoothKit"
-  s.version          = "5.3.400"
+  s.version          = "6.0.0"
   s.summary          = "Bluetooth library for RxSwift"
 
   s.description      = <<-DESC
@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/outsidesource/RxBluetoothKit.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/polidea'
 
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.10'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.13'
   s.watchos.deployment_target = '4.0'
   s.tvos.deployment_target = '11.0'
   s.swift_version = '5.0'
@@ -24,5 +24,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Source/*.swift'
   s.osx.exclude_files = 'Source/RestoredState.swift', 'Source/CentralManager+RestoredState.swift', 'Source/CentralManagerRestoredState.swift'
   s.frameworks   = 'CoreBluetooth'
-  s.dependency 'RxSwift', '~> 5.0'
+  s.dependency 'RxSwift', '~> 5.1'
 end

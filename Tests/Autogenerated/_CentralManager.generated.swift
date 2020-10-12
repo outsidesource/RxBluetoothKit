@@ -9,11 +9,11 @@ typealias DisconnectionReason = Error
 /// _CentralManager is a class implementing ReactiveX API which wraps all Core Bluetooth Manager's functions allowing to
 /// discover, connect to remote peripheral devices and more.
 /// You can start using this class by discovering available services of nearby peripherals. Before calling any
-/// public `_CentralManager`'s functions you should make sure that Bluetooth is turned on and powered on. It can be done
-/// by calling and observing returned value of `observeState()` and then chaining it with `scanForPeripherals(_:options:)`:
+/// public `_CentralManager`'s functions you should make sure that Bluetooth is turned on and powered on.
+/// It can be done by calling and observing returned value of `observeStateWithInitialValue()` and then
+/// chaining it with `scanForPeripherals(_:options:)`:
 /// ```
-/// let disposable = centralManager.observeState
-///     .startWith(centralManager.state)
+/// let disposable = centralManager.observeStateWithInitialValue()
 ///     .filter { $0 == .poweredOn }
 ///     .take(1)
 ///     .flatMap { centralManager.scanForPeripherals(nil) }
@@ -71,10 +71,14 @@ class _CentralManager: _ManagerType {
     /// - parameter queue: Queue on which bluetooth callbacks are received. By default main thread is used.
     /// - parameter options: An optional dictionary containing initialization options for a central manager.
     /// For more info about it please refer to [Central Manager initialization options](https://developer.apple.com/library/ios/documentation/CoreBluetooth/Reference/CBCentralManager_Class/index.html)
+    /// - parameter cbCentralManager: Optional instance of `CBCentralManagerMock` to be used as a `manager`. If you
+    /// skip this parameter, there will be created an instance of `CBCentralManagerMock` using given queue and options.
     convenience init(queue: DispatchQueue = .main,
-                            options: [String: AnyObject]? = nil) {
+                            options: [String: AnyObject]? = nil,
+                            cbCentralManager: CBCentralManagerMock? = nil) {
         let delegateWrapper = CBCentralManagerDelegateWrapperMock()
-        let centralManager = CBCentralManagerMock(delegate: delegateWrapper, queue: queue, options: options)
+        let centralManager = cbCentralManager ??
+            CBCentralManagerMock(delegate: delegateWrapper, queue: queue, options: options)
         self.init(
             centralManager: centralManager,
             delegateWrapper: delegateWrapper,
@@ -93,14 +97,32 @@ class _CentralManager: _ManagerType {
     // MARK: State
 
     var state: BluetoothState {
-        return BluetoothState(rawValue: manager.state.rawValue) ?? .unsupported
+        return BluetoothState(rawValue: manager.state.rawValue) ?? .unknown
     }
 
     func observeState() -> Observable<BluetoothState> {
         return self.delegateWrapper.didUpdateState.asObservable()
     }
 
+    func observeStateWithInitialValue() -> Observable<BluetoothState> {
+        return Observable.deferred { [weak self] in
+            guard let self = self else {
+                RxBluetoothKitLog.w("observeState - _CentralManager deallocated")
+                return .never()
+            }
+
+            return self.delegateWrapper.didUpdateState.asObservable()
+                .startWith(self.state)
+        }
+    }
+
     // MARK: Scanning
+
+    /// Value indicating if manager is currently scanning.
+    var isScanInProgress: Bool {
+        lock.lock(); defer { lock.unlock() }
+        return scanDisposable != nil
+    }
 
     /// Scans for `_Peripheral`s after subscription to returned observable. First parameter `serviceUUIDs` is
     /// an array of `_Service` UUIDs which needs to be implemented by a peripheral to be discovered. If user don't want to
@@ -285,6 +307,27 @@ class _CentralManager: _ManagerType {
                     }
                 }
     }
+
+    // MARK: ANCS
+
+    /// Emits boolean values according to ancsAuthorized property on a CBPeripheralMock.
+    ///
+    /// - parameter peripheral: `_Peripheral` which is observed for ancsAuthorized chances.
+    /// - returns: Observable which emits next events when `ancsAuthorized` property changes on a peripheral.
+    #if !os(macOS)
+    @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func observeANCSAuthorized(for peripheral: _Peripheral) -> Observable<Bool> {
+        let observable = delegateWrapper.didUpdateANCSAuthorizationForPeripheral
+            .asObservable()
+            .filter { $0 == peripheral.peripheral }
+            // ancsAuthorized is a Bool by default, but the testing framework
+            // will use Bool! instead. In order to support that we are converting
+            // to optional and unwrapping the value.
+            .map { ($0.ancsAuthorized as Bool?)! }
+
+        return ensure(.poweredOn, observable: observable)
+    }
+    #endif
 
     // MARK: Internal functions
 
