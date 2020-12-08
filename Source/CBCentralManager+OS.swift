@@ -109,7 +109,6 @@ public extension CBCentralManager {
 
         set(newValue) {
             CBCentralManager.delegateBoxes[self.hash] = newValue
-            self.delegate = newValue
         }
     }
 
@@ -117,10 +116,12 @@ public extension CBCentralManager {
 
         if let delegateBox = self.delegateBox {
             delegateBox.addDelegate(delegate)
+            self.delegate = delegateBox
         } else {
             let delegateBox = CBCentralManagerDelegateBox()
-            delegateBox.addDelegate(delegate)
             self.delegateBox = delegateBox
+            delegateBox.addDelegate(delegate)
+            self.delegate = delegateBox
         }
 
     }

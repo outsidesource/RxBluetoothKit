@@ -146,18 +146,27 @@ public extension CBPeripheral {
 
         set(newValue) {
             CBPeripheral.delegateBoxes[self.hash] = newValue
-            self.delegate = newValue
         }
     }
 
-    @objc func addDelegate(_ delegate: CBPeripheralDelegate) {
-
+    // TODO: 1 REVIEW why call to addDelegate was crashing
+    // This was potentially due to pre-compiled Airoha.framework namespace collision
+    // We have renamed to attachDelegate which fixes the issue
+    @objc func attachDelegate(_ delegate: CBPeripheralDelegate) {
+        //print("CBPeripheral.attachDelegate()")
+        
         if let delegateBox = self.delegateBox {
+            
             delegateBox.addDelegate(delegate)
+            self.delegate = delegateBox
+            
         } else {
+            
             let delegateBox = CBPeripheralDelegateBox()
-            delegateBox.addDelegate(delegate)
             self.delegateBox = delegateBox
+            delegateBox.addDelegate(delegate)
+            self.delegate = delegateBox
+            
         }
 
     }
